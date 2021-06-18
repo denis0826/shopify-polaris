@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Qoute from './components/Qoute';
+import ColorPicker from './components/ColorPicker';
+import ImageGenerator from './components/ImageGenerator';
+import { Layout, hsbToRgb, rgbString } from '@shopify/polaris';
 
 function App() {
+  const [color, setColor] = useState({
+    hue: 300,
+    brightness: 1,
+    saturation: 0.7,
+    alpha: 0.7,
+  });
+  const [qoute, setQoute] = useState('');
+  const rgbaColor = rgbString(hsbToRgb(color));
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Layout.Section>
+        <Qoute qoute={qoute} setQoute={setQoute} />
+      </Layout.Section>
+      <Layout.Section>
+        <ColorPicker setColor={setColor} color={color} />
+      </Layout.Section>
+      <Layout.Section>
+        <ImageGenerator color={rgbaColor} qoute={qoute} />
+      </Layout.Section>
+    </Layout>
   );
 }
 
